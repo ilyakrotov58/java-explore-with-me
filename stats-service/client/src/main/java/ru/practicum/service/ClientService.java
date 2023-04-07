@@ -12,8 +12,6 @@ import org.springframework.web.util.DefaultUriBuilderFactory;
 import ru.practicum.BaseClient;
 import ru.practicum.dto.HitDto;
 
-import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.Map;
 
 @Slf4j
