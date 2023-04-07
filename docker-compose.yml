@@ -1,15 +1,32 @@
 version: '3.1'
 services:
-  stats-server:
+  server:
+    build: server
     ports:
       - "9090:9090"
+    container_name: server
+    image: server_image
+    depends_on:
+      - StatServerDb
+    environment:
+        - SPRING_DATASOURCE_URL=jdbc:postgresql://localhost:5432/StatServerDb
+        - SPRING_DATASOURCE_USERNAME=ShareIt
+        - SPRING_DATASOURCE_PASSWORD=password
 
-  stats-db:
-    image: postgres:14-alpine
-
-  ewm-service:
+  client:
+    build: client
     ports:
       - "8080:8080"
+    container_name: client
+    image: client_image
+    environment:
+      - STAT_SERVER_URL=http://server:9090
 
-  ewm-db:
+  StatServerDb:
     image: postgres:14-alpine
+    environment:
+      - POSTGRES_DB=StatServerDb
+      - POSTGRES_USER=ShareIt
+      - POSTGRES_PASSWORD=password
+    ports:
+      - "6541:5432"
