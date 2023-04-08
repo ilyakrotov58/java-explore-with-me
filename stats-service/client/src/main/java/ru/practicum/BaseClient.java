@@ -13,7 +13,7 @@ public class BaseClient {
         this.rest = rest;
     }
 
-    protected ResponseEntity<Object> get(String path, Map<String, Object> parameters) {
+    protected <T> ResponseEntity<Object> get(String path, Map<String, Object> parameters, T body) {
         return makeAndSendRequest(HttpMethod.GET, path, parameters, null);
     }
 
