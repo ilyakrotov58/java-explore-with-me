@@ -40,8 +40,8 @@ public class ServerService implements IServerService {
         var startDateTime = LocalDateTime.parse(start, formatter);
         var endDateTime = LocalDateTime.parse(end, formatter);
 
-        if(uris != null) {
-            if(unique) {
+        if (uris != null) {
+            if (unique) {
                 result = serverRepository.getStatisticOfUriUniqIp(
                         startDateTime,
                         endDateTime,
@@ -53,7 +53,7 @@ public class ServerService implements IServerService {
                         uris);
             }
         } else {
-            if(unique) {
+            if (unique) {
                 result = serverRepository.getStatisticWithoutUriAndWithUniqueIp(
                         startDateTime,
                         endDateTime);
