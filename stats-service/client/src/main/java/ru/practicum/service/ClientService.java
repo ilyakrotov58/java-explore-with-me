@@ -30,10 +30,10 @@ public class ClientService extends BaseClient {
     }
 
     public ResponseEntity<Object> saveViewInfo(HitDto hitDto) {
-        return post("/hit",null, hitDto);
+        return post("/hit", null, hitDto);
     }
 
-    public ResponseEntity<Object>getStatistic(String start, String end, String[] uris, boolean unique) {
+    public ResponseEntity<Object> getStatistic(String start, String end, String[] uris, boolean unique) {
         Map<String, Object> parameters = Map.of(
                 "start", start,
                 "end", end,
@@ -43,7 +43,7 @@ public class ClientService extends BaseClient {
         return get("/stats?start={start}&end={end}&uris={uris}&unique={unique}", parameters);
     }
 
-    public ResponseEntity<Object>getStatistic(String start, String end, boolean unique) {
+    public ResponseEntity<Object> getStatistic(String start, String end, boolean unique) {
         Map<String, Object> parameters = Map.of(
                 "start", start,
                 "end", end,
