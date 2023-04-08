@@ -30,7 +30,7 @@ public class ClientService extends BaseClient {
     }
 
     public ResponseEntity<Object> saveViewInfo(HitDto hitDto) {
-        return post("/hit", hitDto);
+        return post("/hit", hitDto, null);
     }
 
     public ResponseEntity<Object> getStatistic(String start, String end, String[] uris, boolean unique) {
