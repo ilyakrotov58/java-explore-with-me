@@ -14,17 +14,17 @@ public class BaseClient {
         this.rest = rest;
     }
 
-    protected <T> ResponseEntity<Object> get(String path, Map<String, Object> parameters, @Nullable T body) {
-        return makeAndSendRequest(HttpMethod.GET, path, parameters, body);
+    protected ResponseEntity<Object> get(String path, Map<String, Object> parameters) {
+        return makeAndSendRequest(HttpMethod.GET, path, parameters, null);
     }
 
-    protected <T> ResponseEntity<Object> post(String path, T body, @Nullable Map<String, Object> parameters) {
-        return makeAndSendRequest(HttpMethod.POST, path, parameters, body);
+    protected <T> ResponseEntity<Object> post(String path, T body) {
+        return makeAndSendRequest(HttpMethod.POST, path, null, body);
     }
 
-    private <T> ResponseEntity<Object> makeAndSendRequest(HttpMethod method, String path, @Nullable Map<String, Object> parameters, @Nullable T body) {
+    private <T> ResponseEntity<Object> makeAndSendRequest(HttpMethod method, String path, @Nullable Map< String, Object> parameters, @Nullable T body) {
 
-        HttpEntity<T> requestEntity = new HttpEntity<>(body);
+        HttpEntity<T> requestEntity = new HttpEntity<>(body, new HttpHeaders());
 
         ResponseEntity<Object> statisticServerResponse;
         try {
