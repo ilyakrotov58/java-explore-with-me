@@ -1,14 +1,14 @@
 package ru.practicum.service;
 
 import ru.practicum.dto.HitDto;
-import ru.practicum.model.StatInfo;
+import ru.practicum.dto.StatInfoDto;
 
 import java.text.ParseException;
-import java.util.ArrayList;
+import java.util.List;
 
 public interface IServerService {
 
     void saveViewInfo(HitDto hit) throws ParseException;
 
-    ArrayList<StatInfo> getStatistic(String start, String end, String[] uris, boolean unique);
+    List<StatInfoDto> getStatistic(String start, String end, String[] uris, boolean unique);
 }

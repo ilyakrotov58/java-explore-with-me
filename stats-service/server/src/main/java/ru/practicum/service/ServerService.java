@@ -5,21 +5,27 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.dto.HitDto;
+import ru.practicum.exceptions.WrongDateTimeFormatException;
 import ru.practicum.mapper.HitDtoMapper;
-import ru.practicum.model.StatInfo;
+import ru.practicum.dto.StatInfoDto;
 import ru.practicum.repository.IServerRepository;
 
+import java.time.DateTimeException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
+import java.util.List;
 
 @Slf4j
 @Service
 @Transactional
 public class ServerService implements IServerService {
 
+    private final IServerRepository serverRepository;
+
     @Autowired
-    private IServerRepository serverRepository;
+    public ServerService(IServerRepository serverRepository) {
+        this.serverRepository = serverRepository;
+    }
 
     @Transactional
     @Override
@@ -31,14 +37,21 @@ public class ServerService implements IServerService {
     }
 
     @Override
-    public ArrayList<StatInfo> getStatistic(String start, String end, String[] uris, boolean unique) {
+    public List<StatInfoDto> getStatistic(String start, String end, String[] uris, boolean unique) {
 
-        ArrayList<StatInfo> result;
+        List<StatInfoDto> result;
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
-        var startDateTime = LocalDateTime.parse(start, formatter);
-        var endDateTime = LocalDateTime.parse(end, formatter);
+        LocalDateTime startDateTime;
+        LocalDateTime endDateTime;
+
+        try {
+            startDateTime = LocalDateTime.parse(start, formatter);
+            endDateTime = LocalDateTime.parse(end, formatter);
+        } catch (DateTimeException ex) {
+            throw new WrongDateTimeFormatException("DateTime format of start/end date should be: \"yyyy-MM-dd HH:mm:ss\"");
+        }
 
         if (uris != null) {
             if (unique) {

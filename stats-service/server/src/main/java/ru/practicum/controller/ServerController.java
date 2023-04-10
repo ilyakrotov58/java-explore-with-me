@@ -5,17 +5,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.dto.HitDto;
-import ru.practicum.model.StatInfo;
+import ru.practicum.dto.StatInfoDto;
 import ru.practicum.service.ServerService;
 
-import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @Slf4j
 public class ServerController {
 
+    private final ServerService statService;
+
     @Autowired
-    private ServerService statService;
+    public ServerController(ServerService statService) {
+        this.statService = statService;
+    }
 
     @PostMapping("/hit")
     public void saveViewInfo(@RequestBody HitDto hitDto) {
@@ -23,10 +27,10 @@ public class ServerController {
     }
 
     @GetMapping("/stats")
-    public ArrayList<StatInfo> getStatistic(@RequestParam String start,
-                                            @RequestParam String end,
-                                            @RequestParam @Nullable String[] uris,
-                                            @RequestParam @Nullable boolean unique) {
+    public List<StatInfoDto> getStatistic(@RequestParam String start,
+                                          @RequestParam String end,
+                                          @RequestParam @Nullable String[] uris,
+                                          @RequestParam @Nullable boolean unique) {
         return statService.getStatistic(start, end, uris, unique);
     }
 }

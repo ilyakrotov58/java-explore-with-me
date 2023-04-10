@@ -23,8 +23,12 @@ import javax.validation.Valid;
 @Slf4j
 public class ClientController {
 
-    @Autowired
     private ClientService service;
+
+    @Autowired
+    public ClientController(ClientService service) {
+        this.service = service;
+    }
 
     @PostMapping("/hit")
     @Operation(summary = "Add endpoint request")
