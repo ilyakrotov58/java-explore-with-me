@@ -67,15 +67,15 @@ public class EventAdminService implements IEventAdminService {
         }
 
         if (states != null) {
-            eventsWithoutDateFilter = eventsWithoutDateFilter.
-                    stream()
+            eventsWithoutDateFilter = eventsWithoutDateFilter
+                    .stream()
                     .filter(e -> Arrays.stream(states).anyMatch(s -> s.equals(e.getState().toString())))
                     .collect(Collectors.toList());
         }
 
         if (categories != null) {
-            eventsWithoutDateFilter = eventsWithoutDateFilter.
-                    stream()
+            eventsWithoutDateFilter = eventsWithoutDateFilter
+                    .stream()
                     .filter(e -> Arrays.stream(categories).anyMatch(c -> c == (e.getCategory().getId())))
                     .collect(Collectors.toList());
         }

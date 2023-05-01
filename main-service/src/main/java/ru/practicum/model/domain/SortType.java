@@ -1,5 +1,5 @@
 package ru.practicum.model.domain;
 
-public enum SORT_TYPE {
+public enum SortType {
     EVENT_DATE, VIEWS
 }

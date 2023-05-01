@@ -8,7 +8,7 @@ import ru.practicum.dto.EventShortDto;
 import ru.practicum.dto.mappers.EventDtoMapper;
 import ru.practicum.model.Event;
 import ru.practicum.model.domain.EventState;
-import ru.practicum.model.domain.SORT_TYPE;
+import ru.practicum.model.domain.SortType;
 import ru.practicum.repository.pub.IEventPublicRepository;
 import ru.practicum.service.pub.interfaces.IEventsPublicService;
 
@@ -121,7 +121,7 @@ public class EventsPublicService implements IEventsPublicService {
         }
 
         if (sort != null) {
-            if (sort.equals(SORT_TYPE.EVENT_DATE.toString())) {
+            if (sort.equals(SortType.EVENT_DATE.toString())) {
                 filteredEvents = filteredEvents
                         .stream()
                         .sorted((o1, o2) -> {
@@ -131,7 +131,7 @@ public class EventsPublicService implements IEventsPublicService {
                                 return 0;
                             }
                         }).collect(Collectors.toList());
-            } else if (sort.equals(SORT_TYPE.VIEWS.toString())) {
+            } else if (sort.equals(SortType.VIEWS.toString())) {
                 filteredEvents = filteredEvents
                         .stream()
                         .sorted((o1, o2) -> {
