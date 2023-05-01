@@ -90,7 +90,7 @@ public class EventsPublicController {
 
         try (CloseableHttpClient httpclient = HttpClients.createDefault()) {
             HttpUriRequest httppost = RequestBuilder.post()
-                    .setUri(new URI("http://localhost:9090/hit"))
+                    .setUri(new URI("http://localhost:8080/hit"))
                     .setEntity(entity)
                     .build();
 

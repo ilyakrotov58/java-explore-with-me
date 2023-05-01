@@ -96,7 +96,11 @@ public class CompilationAdminService implements ICompilationAdminService {
 
         var savedCompilation = compilationAdminRepository.save(compilation.get());
 
-        savedCompilation.setEventsList(events);
+        for(Event event : events) {
+            savedCompilation.getEventsList().add(event);
+        }
+
+        savedCompilation = compilationAdminRepository.save(savedCompilation);
 
         return CompilationDtoMapper.toCompilationDto(savedCompilation);
     }
