@@ -13,6 +13,19 @@ services:
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=password
 
+  main-service:
+      build: main-service
+      ports:
+        - "8080:8080"
+      container_name: main-service
+      image: main_image
+      depends_on:
+        - MainServiceDb
+      environment:
+        - SPRING_DATASOURCE_URL=jdbc:postgresql://MainServiceDb:5432/MainServiceDb
+        - SPRING_DATASOURCE_USERNAME=postgres
+        - SPRING_DATASOURCE_PASSWORD=password
+
   StatServerDb:
     image: postgres:15-alpine
     container_name: StatServerDb
@@ -22,3 +35,13 @@ services:
       - POSTGRES_PASSWORD=password
     ports:
       - "6541:5432"
+
+  MainServiceDb:
+      image: postgres:15-alpine
+      container_name: MainServiceDb
+      environment:
+        - POSTGRES_DB=MainServiceDb
+        - POSTGRES_USER=postgres
+        - POSTGRES_PASSWORD=password
+      ports:
+        - "6541:5432"

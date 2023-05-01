@@ -42,7 +42,7 @@ public class ClientController {
             @RequestParam String start,
             @RequestParam String end,
             @RequestParam @Nullable String[] uris,
-            @RequestParam @Nullable boolean unique) {
+            @RequestParam @Nullable Boolean unique) {
 
         if (uris == null) {
             return service.getStatistic(start, end, unique);
