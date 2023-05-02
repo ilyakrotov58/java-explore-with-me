@@ -88,7 +88,7 @@ public class EventsPublicController {
         var ip = request.getRemoteAddr();
 
         final String json = gson.toJson(new HitDto(
-                "main-service",
+                "ewm-main-service",
                 request.getRequestURI(),
                 ip,
                 dateFormatted

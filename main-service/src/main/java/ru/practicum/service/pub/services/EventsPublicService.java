@@ -83,16 +83,18 @@ public class EventsPublicService implements IEventsPublicService {
                     .collect(Collectors.toList());
         }
 
-        if (paid) {
-            filteredEvents = filteredEvents
-                    .stream()
-                    .filter(Event::isPaid)
-                    .collect(Collectors.toList());
-        } else {
-            filteredEvents = filteredEvents
-                    .stream()
-                    .filter(e -> !e.isPaid())
-                    .collect(Collectors.toList());
+        if (paid != null) {
+            if (paid) {
+                filteredEvents = filteredEvents
+                        .stream()
+                        .filter(Event::isPaid)
+                        .collect(Collectors.toList());
+            } else {
+                filteredEvents = filteredEvents
+                        .stream()
+                        .filter(e -> !e.isPaid())
+                        .collect(Collectors.toList());
+            }
         }
 
         if (rangeEnd != null && rangeStart != null) {
