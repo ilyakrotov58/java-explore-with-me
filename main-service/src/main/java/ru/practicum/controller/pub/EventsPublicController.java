@@ -106,8 +106,7 @@ public class EventsPublicController {
             try (CloseableHttpResponse response = httpclient.execute(httppost)) {
                 System.out.println(EntityUtils.toString(response.getEntity()));
             }
-        } catch (URISyntaxException | IOException e) {
-            throw new RuntimeException(e);
+        } catch (URISyntaxException | IOException ignored) {
         }
     }
 }
