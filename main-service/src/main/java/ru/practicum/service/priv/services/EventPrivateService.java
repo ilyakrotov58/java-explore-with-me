@@ -292,10 +292,20 @@ public class EventPrivateService implements IEventPrivateService {
                         request.get().getStatus()
                 ));
             } else if (request.get().getStatus() == RequestState.CONFIRMED) {
+
+                String created = request.get().getCreated().toString();
+
+                if (created.endsWith("0")) {
+                    created = request.get()
+                            .getCreated()
+                            .toString()
+                            .substring(created.lastIndexOf("0"));
+                }
+
                 confirmedRequests.add(new EventRequestStatusUpdateResult.ParticipationRequestDto(
                         request.get().getId(),
                         request.get().getEvent().getId(),
-                        request.get().getCreated().toString(),
+                        created,
                         request.get().getUser().getId(),
                         request.get().getStatus()
                 ));
