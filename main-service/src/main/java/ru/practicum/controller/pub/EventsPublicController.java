@@ -99,7 +99,7 @@ public class EventsPublicController {
             HttpUriRequest httppost = RequestBuilder.post()
                     .setHeader("Accept", "application/json")
                     .setHeader("Content-type", "application/json")
-                    .setUri(new URI("http://localhost:9090/hit"))
+                    .setUri(new URI("http://9090:9090/hit"))
                     .setEntity(entity)
                     .build();
 
