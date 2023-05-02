@@ -25,6 +25,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -80,17 +81,25 @@ public class EventsPublicController {
     }
 
     private void sendRequestToStatService(HttpServletRequest request) throws UnsupportedEncodingException {
+
+        DateTimeFormatter f = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        String dateFormatted = LocalDateTime.now().format(f);
+
+        var ip = request.getRemoteAddr();
+
         final String json = gson.toJson(new HitDto(
                 "main-service",
                 request.getRequestURI(),
-                request.getRemoteUser(),
-                LocalDateTime.now().toString()
+                ip,
+                dateFormatted
         ));
         final StringEntity entity = new StringEntity(json);
 
         try (CloseableHttpClient httpclient = HttpClients.createDefault()) {
             HttpUriRequest httppost = RequestBuilder.post()
-                    .setUri(new URI("http://localhost:8080/hit"))
+                    .setHeader("Accept", "application/json")
+                    .setHeader("Content-type", "application/json")
+                    .setUri(new URI("http://localhost:9090/hit"))
                     .setEntity(entity)
                     .build();
 

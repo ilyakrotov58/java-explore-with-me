@@ -66,7 +66,7 @@ create table if not exists events
     "request_moderation" boolean,
     state               varchar(20) not null,
     title               varchar(100),
-    views               integer,
+    hits               integer,
     category_id         integer     not null
         constraint events_categories_id_fk
             references categories

@@ -29,7 +29,7 @@ public class EventDtoMapper {
                         event.getInitiator().getName()),
                 event.isPaid(),
                 event.getTitle(),
-                event.getViews());
+                event.getHits());
     }
 
     public static EventShortDto toEventShortDto(Event event) {
@@ -53,7 +53,7 @@ public class EventDtoMapper {
                 ),
                 event.isPaid(),
                 event.getTitle(),
-                event.getViews()
+                event.getHits()
         );
     }
 
@@ -88,7 +88,7 @@ public class EventDtoMapper {
                 event.getState(),
                 eventDate,
                 event.getTitle(),
-                event.getViews()
+                event.getHits()
         );
     }
 

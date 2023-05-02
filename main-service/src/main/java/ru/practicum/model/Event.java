@@ -53,8 +53,8 @@ public class Event {
     @Column(name = "title")
     private String title;
 
-    @Column(name = "views")
-    private int views;
+    @Column(name = "hits")
+    private int hits;
 
     @ManyToOne
     @JoinColumn(name = "category_id", referencedColumnName = "id")

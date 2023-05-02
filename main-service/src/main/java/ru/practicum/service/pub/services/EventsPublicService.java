@@ -135,7 +135,7 @@ public class EventsPublicService implements IEventsPublicService {
                 filteredEvents = filteredEvents
                         .stream()
                         .sorted((o1, o2) -> {
-                            if (o1.getViews() > (o2.getViews())) {
+                            if (o1.getHits() > (o2.getHits())) {
                                 return 1;
                             } else {
                                 return 0;
@@ -155,7 +155,9 @@ public class EventsPublicService implements IEventsPublicService {
 
     @Override
     public EventFullDto getEvent(long id) {
-        return EventDtoMapper
-                .toEventFullDto(eventPublicRepository.getReferenceById(id));
+        var event = eventPublicRepository.getReferenceById(id);
+        event.setHits(event.getHits() + 1);
+
+        return EventDtoMapper.toEventFullDto(event);
     }
 }
