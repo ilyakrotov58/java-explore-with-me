@@ -29,11 +29,12 @@ public class UsersAdminController {
     }
 
     @GetMapping
-    public List<UserDto> getUsers(
+    public ResponseEntity<List<UserDto>> getUsers(
             @RequestParam int[] ids,
             @RequestParam(defaultValue = "0") int from,
             @RequestParam(defaultValue = "10") int size) {
-        return userAdminService.getUsers(ids, from, size);
+        return new ResponseEntity<>(userAdminService.getUsers(ids, from, size),
+                HttpStatus.OK);
     }
 
     @PostMapping

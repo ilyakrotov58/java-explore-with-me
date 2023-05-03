@@ -27,26 +27,32 @@ public class RequestsPrivateController {
     }
 
     @GetMapping("/{userId}/requests")
-    public List<ParticipationRequestDto> getParticipationRequests(
+    public ResponseEntity<List<ParticipationRequestDto>> getParticipationRequests(
             @PathVariable int userId) {
-        return requestPrivateService.getParticipationRequests(userId);
+        return new ResponseEntity<>(
+                requestPrivateService.getParticipationRequests(userId),
+                HttpStatus.OK);
     }
 
     @PostMapping("/{userId}/requests")
     public ResponseEntity<ParticipationRequestDto> createParticipationRequest(
             @PathVariable int userId,
             @RequestParam int eventId) {
-        return new ResponseEntity<>(requestPrivateService.createParticipationRequest(
-                userId,
-                eventId), HttpStatus.CREATED);
+        return new ResponseEntity<>(
+                requestPrivateService.createParticipationRequest(
+                        userId,
+                        eventId),
+                HttpStatus.CREATED);
     }
 
     @PatchMapping("/{userId}/requests/{requestId}/cancel")
-    public ParticipationRequestDto cancelParticipationRequest(
+    public ResponseEntity<ParticipationRequestDto> cancelParticipationRequest(
             @PathVariable int userId,
             @PathVariable int requestId) {
-        return requestPrivateService.cancelParticipationRequest(
-                userId,
-                requestId);
+        return new ResponseEntity<>(
+                requestPrivateService.cancelParticipationRequest(
+                        userId,
+                        requestId),
+                HttpStatus.OK);
     }
 }

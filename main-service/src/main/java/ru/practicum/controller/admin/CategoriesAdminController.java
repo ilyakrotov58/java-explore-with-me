@@ -29,8 +29,7 @@ public class CategoriesAdminController {
 
     @PostMapping
     public ResponseEntity<CategoryDto> addCategory(
-            @Valid
-            @RequestBody NewCategoryDto newCategoryDto) {
+            @Valid @RequestBody NewCategoryDto newCategoryDto) {
         return new ResponseEntity<>(categoriesAdminService.addCategory(newCategoryDto), HttpStatus.CREATED);
     }
 
@@ -41,12 +40,11 @@ public class CategoriesAdminController {
     }
 
     @PatchMapping("/{catId}")
-    public CategoryDto updateCategory(
+    public ResponseEntity<CategoryDto> updateCategory(
             @PathVariable int catId,
-            @Valid
-            @RequestBody NewCategoryDto newCategoryDto) {
-        return categoriesAdminService.updateCategory(
+            @Valid @RequestBody NewCategoryDto newCategoryDto) {
+        return new ResponseEntity<>(categoriesAdminService.updateCategory(
                 catId,
-                newCategoryDto);
+                newCategoryDto), HttpStatus.OK);
     }
 }

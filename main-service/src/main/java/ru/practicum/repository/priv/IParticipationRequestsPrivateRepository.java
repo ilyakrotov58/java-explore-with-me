@@ -22,4 +22,10 @@ public interface IParticipationRequestsPrivateRepository extends JpaRepository<P
             "SELECT * FROM participation_requests " +
                     "WHERE event_id IN(?1)", nativeQuery = true)
     List<ParticipationRequest> getUserParticipationRequestsByEventId(List<Long> eventIds);
+
+    @Query(value =
+            "SELECT * FROM participation_requests " +
+            "WHERE id IN(?1)", nativeQuery = true)
+    List<ParticipationRequest> getUserParticipationRequestsByIds(List<Long> requestsIds);
+
 }

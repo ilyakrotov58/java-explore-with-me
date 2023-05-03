@@ -13,7 +13,6 @@ import java.util.List;
 @NoArgsConstructor
 public class CompilationDto {
 
-    @NotNull
     private long id;
 
     @NotNull

@@ -11,6 +11,8 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.lang.Nullable;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -35,7 +37,7 @@ import java.util.List;
 @RestController
 public class EventsPublicController {
 
-    final Gson gson = new Gson();
+    private final Gson gson = new Gson();
     private IEventsPublicService eventsPublicService;
 
     @Autowired
@@ -45,7 +47,7 @@ public class EventsPublicController {
     }
 
     @GetMapping
-    public List<EventShortDto> getEventList(
+    public ResponseEntity<List<EventShortDto>> getEventList(
             @RequestParam @Nullable String text,
             @RequestParam @Nullable int[] categories,
             @RequestParam @Nullable Boolean paid,
@@ -59,25 +61,28 @@ public class EventsPublicController {
     ) throws IOException {
 
         sendRequestToStatService(request);
-        return eventsPublicService.getEventList(
-                text,
-                categories,
-                paid,
-                rangeStart,
-                rangeEnd,
-                onlyAvailable,
-                sort,
-                from,
-                size
-        );
+        return new ResponseEntity<>(
+                eventsPublicService.getEventList(
+                        text,
+                        categories,
+                        paid,
+                        rangeStart,
+                        rangeEnd,
+                        onlyAvailable,
+                        sort,
+                        from,
+                        size),
+                HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public EventFullDto getEvent(
+    public ResponseEntity<EventFullDto> getEvent(
             @PathVariable long id,
             HttpServletRequest request) throws UnsupportedEncodingException {
         sendRequestToStatService(request);
-        return eventsPublicService.getEvent(id);
+        return new ResponseEntity<>(
+                eventsPublicService.getEvent(id),
+                HttpStatus.OK);
     }
 
     private void sendRequestToStatService(HttpServletRequest request) throws UnsupportedEncodingException {
@@ -106,7 +111,8 @@ public class EventsPublicController {
             try (CloseableHttpResponse response = httpclient.execute(httppost)) {
                 System.out.println(EntityUtils.toString(response.getEntity()));
             }
-        } catch (URISyntaxException | IOException ignored) {
+        } catch (URISyntaxException | IOException ex) {
+            log.error(ex.getMessage());
         }
     }
 }

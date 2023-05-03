@@ -30,8 +30,7 @@ public class CompilationsAdminController {
 
     @PostMapping
     public ResponseEntity<CompilationDto> createCompilation(
-            @Valid
-            @RequestBody NewCompilationDto newCompilationDto) {
+            @Valid @RequestBody NewCompilationDto newCompilationDto) {
         return new ResponseEntity<>(
                 compilationAdminService.createCompilation(newCompilationDto),
                 HttpStatus.CREATED);
@@ -39,15 +38,17 @@ public class CompilationsAdminController {
 
     @DeleteMapping("/{compId}")
     public ResponseEntity<HttpStatus> deleteCompilation(@PathVariable int compId) {
-        compilationAdminService.deleteCompilation(compId);
 
+        compilationAdminService.deleteCompilation(compId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @PatchMapping("/{compId}")
-    public CompilationDto updateCompilation(
+    public ResponseEntity<CompilationDto> updateCompilation(
             @PathVariable int compId,
             @RequestBody UpdateCompilationRequest updateCompilationRequest) {
-        return compilationAdminService.updateCompilation(compId, updateCompilationRequest);
+        return new ResponseEntity<>(
+                compilationAdminService.updateCompilation(compId, updateCompilationRequest),
+                HttpStatus.OK);
     }
 }

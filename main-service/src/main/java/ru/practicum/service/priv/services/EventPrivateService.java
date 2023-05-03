@@ -265,49 +265,51 @@ public class EventPrivateService implements IEventPrivateService {
             throw new NotFoundException(String.format("User with id = %s can't be found", userId));
         }
 
-        for (long id : updateRequest.getRequestIds()) {
+        var requestsIds = updateRequest.getRequestIds();
 
-            var request = participationRequestsRepository.findById(id);
+        List <ParticipationRequest> requestsInDb = new ArrayList<>();
 
-            if (request.isEmpty()) {
-                throw new NotFoundException("Request with id %s not found");
-            }
+        if(!requestsIds.isEmpty()) {
+            requestsInDb = participationRequestsRepository.getUserParticipationRequestsByIds(requestsIds);
+        }
+
+        for (ParticipationRequest request : requestsInDb) {
 
             if (updateRequest.getStatus() == RequestState.REJECTED
-                    && request.get().getStatus() == RequestState.CONFIRMED) {
+                    && request.getStatus() == RequestState.CONFIRMED) {
                 throw new ConflictDataException("Cant cancel confirmed request");
             }
 
-            request.get().setStatus(updateRequest.getStatus());
+            request.setStatus(updateRequest.getStatus());
 
-            participationRequestsRepository.save(request.get());
+            participationRequestsRepository.save(request);
 
-            if (request.get().getStatus() == RequestState.CANCELED ||
-                    request.get().getStatus() == RequestState.REJECTED) {
+            if (request.getStatus() == RequestState.CANCELED ||
+                    request.getStatus() == RequestState.REJECTED) {
                 rejectedRequests.add(new EventRequestStatusUpdateResult.ParticipationRequestDto(
-                        request.get().getId(),
-                        request.get().getEvent().getId(),
-                        request.get().getCreated().toString(),
-                        request.get().getUser().getId(),
-                        request.get().getStatus()
+                        request.getId(),
+                        request.getEvent().getId(),
+                        request.getCreated().toString(),
+                        request.getUser().getId(),
+                        request.getStatus()
                 ));
-            } else if (request.get().getStatus() == RequestState.CONFIRMED) {
+            } else if (request.getStatus() == RequestState.CONFIRMED) {
 
-                String created = request.get().getCreated().toString();
+                String created = request.getCreated().toString();
 
                 if (created.endsWith("0")) {
-                    created = request.get()
+                    created = request
                             .getCreated()
                             .toString()
                             .substring(created.lastIndexOf("0"));
                 }
 
                 confirmedRequests.add(new EventRequestStatusUpdateResult.ParticipationRequestDto(
-                        request.get().getId(),
-                        request.get().getEvent().getId(),
+                        request.getId(),
+                        request.getEvent().getId(),
                         created,
-                        request.get().getUser().getId(),
-                        request.get().getStatus()
+                        request.getUser().getId(),
+                        request.getStatus()
                 ));
 
                 if (event.get().getConfirmedRequests() == event.get().getParticipantLimit()) {

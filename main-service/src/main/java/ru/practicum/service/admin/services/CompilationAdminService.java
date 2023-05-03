@@ -14,6 +14,7 @@ import ru.practicum.repository.admin.IEventAdminRepository;
 import ru.practicum.service.admin.interfaces.ICompilationAdminService;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Slf4j
 @Service
@@ -36,23 +37,16 @@ public class CompilationAdminService implements ICompilationAdminService {
         var savedCompilation = compilationAdminRepository
                 .save(CompilationDtoMapper.fromNewToCompilation(newCompilationDto));
 
-        var eventList = new ArrayList<Event>();
+        List<Event> events;
 
-        if (newCompilationDto.getEvents() != null) {
-            for (Long eventId : newCompilationDto.getEvents()) {
-                var event = eventAdminRepository.findById(eventId);
+        var eventIds = newCompilationDto.getEvents();
 
-                if (event.isEmpty()) {
-                    throw new NotFoundException(String.format("Event with id = %s is not found", eventId));
-                }
+        if (eventIds != null) {
 
-                var eventInDb = eventAdminRepository.save(event.get());
+            events = eventAdminRepository.getEventsByIds(eventIds);
 
-                eventList.add(eventInDb);
-            }
+            savedCompilation.setEventsList(events);
         }
-
-        savedCompilation.setEventsList(eventList);
 
         return CompilationDtoMapper.toCompilationDto(savedCompilation);
     }
@@ -70,20 +64,13 @@ public class CompilationAdminService implements ICompilationAdminService {
             throw new NotFoundException(String.format("Compilation with id = %s is not found", compId));
         }
 
-        var events = new ArrayList<Event>();
+        List<Event> events = new ArrayList<>();
 
-        if (!updateCompilationRequest.getEvents().isEmpty()) {
-            for (Long eventId : updateCompilationRequest.getEvents()) {
-                var event = eventAdminRepository.findById(eventId);
+        var eventIds = updateCompilationRequest.getEvents();
 
-                if (event.isEmpty()) {
-                    throw new NotFoundException(String.format("Event with id = %s is not found", eventId));
-                }
+        if (!eventIds.isEmpty()) {
 
-                eventAdminRepository.save(event.get());
-
-                events.add(event.get());
-            }
+            events = eventAdminRepository.getEventsByIds(eventIds);
         }
 
         if (updateCompilationRequest.getPinned() != null) {

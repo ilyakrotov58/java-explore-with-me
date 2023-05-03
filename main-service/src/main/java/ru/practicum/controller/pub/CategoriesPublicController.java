@@ -3,6 +3,8 @@ package ru.practicum.controller.pub;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.dto.CategoryDto;
@@ -25,15 +27,19 @@ public class CategoriesPublicController {
     }
 
     @GetMapping
-    public List<CategoryDto> getCategoriesList(
+    public ResponseEntity<List<CategoryDto>> getCategoriesList(
             @RequestParam(defaultValue = "0") int from,
             @RequestParam(defaultValue = "10") int size) {
-        return categoriesPublicService.getCategoriesList(from, size);
+        return new ResponseEntity<>(
+                categoriesPublicService.getCategoriesList(from, size),
+                HttpStatus.OK);
     }
 
     @GetMapping("/{catId}")
-    public CategoryDto getCategory(
+    public ResponseEntity<CategoryDto> getCategory(
             @PathVariable int catId) {
-        return categoriesPublicService.getCategory(catId);
+        return new ResponseEntity<>(
+                categoriesPublicService.getCategory(catId),
+                HttpStatus.OK);
     }
 }
