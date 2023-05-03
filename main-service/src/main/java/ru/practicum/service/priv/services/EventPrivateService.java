@@ -267,9 +267,9 @@ public class EventPrivateService implements IEventPrivateService {
 
         var requestsIds = updateRequest.getRequestIds();
 
-        List <ParticipationRequest> requestsInDb = new ArrayList<>();
+        List<ParticipationRequest> requestsInDb = new ArrayList<>();
 
-        if(!requestsIds.isEmpty()) {
+        if (!requestsIds.isEmpty()) {
             requestsInDb = participationRequestsRepository.getUserParticipationRequestsByIds(requestsIds);
         }
 
