@@ -142,3 +142,24 @@ create table if not exists compilations_events
 alter table compilations_events
     owner to postgres;
 
+create table if not exists comments
+(
+    id       serial,
+    user_id  int           not null
+        constraint comments_users_id_fk
+            references users
+            on update cascade on delete cascade,
+    event_id int           not null
+        constraint comments_events_id_fk
+            references events
+            on update cascade on delete cascade,
+    text     varchar(2000) not null
+);
+
+create unique index if not exists comments_id_uindex
+    on comments (id);
+
+alter table comments
+    owner to postgres;
+
+

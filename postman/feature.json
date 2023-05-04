@@ -1,0 +1,584 @@
+{
+	"info": {
+		"_postman_id": "e9a7076c-dd8f-4be9-b02a-f3d31e0c55ca",
+		"name": "feature",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "12947409"
+	},
+	"item": [
+		{
+			"name": "private",
+			"item": [
+				{
+					"name": "Comment create",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Status code is 200 or 201\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200,201]);",
+									"});",
+									"pm.test(\"Check response of added Comment\", function () {",
+									"    pm.response.to.be.withBody;",
+									"    pm.response.to.be.json;",
+									"});",
+									"pm.test(\"Test comment 'id' field\", function () {",
+									"    pm.expect(jsonData).to.have.property('id');",
+									"    pm.expect(jsonData.id, \"id must be 1\").to.eql(1);",
+									"});",
+									"pm.test(\"Test comment 'event' field\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.have.property('event');",
+									"    pm.expect(jsonData.event.id, '\"event\" must be 1').to.eql(1);",
+									"});",
+									"pm.test(\"Test comment 'user' field\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.have.property('user');",
+									"    pm.expect(jsonData.user.id, '\"user\" must be 1').to.eql(1);",
+									"});",
+									"pm.test(\"Test comment 'text' field\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.have.property('text');",
+									"    pm.expect(jsonData.text, '\"text\" must be \"text\"').to.eql(\"text\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"text\": \"text\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/comments/1/1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"comments",
+								"1",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Comment update",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Status code is 200 or 201\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200,201]);",
+									"});",
+									"pm.test(\"Check response of added Comment\", function () {",
+									"    pm.response.to.be.withBody;",
+									"    pm.response.to.be.json;",
+									"});",
+									"pm.test(\"Test comment 'id' field\", function () {",
+									"    pm.expect(jsonData).to.have.property('id');",
+									"    pm.expect(jsonData.id, \"id must be 1\").to.eql(1);",
+									"});",
+									"pm.test(\"Test comment 'event' field\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.have.property('event');",
+									"    pm.expect(jsonData.event.id, '\"event\" must be 1').to.eql(1);",
+									"});",
+									"pm.test(\"Test comment 'user' field\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.have.property('user');",
+									"    pm.expect(jsonData.user.id, '\"user\" must be 1').to.eql(1);",
+									"});",
+									"pm.test(\"Test comment 'text' field\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.have.property('text');",
+									"    pm.expect(jsonData.text, '\"text\" must be \"newText\"').to.eql(\"newText\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"text\": \"newText\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/comments/1/1/1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"comments",
+								"1",
+								"1",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all comments",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"",
+									"pm.expect(jsonData).to.have.length(1);",
+									"",
+									"pm.test(\"Status code is 200 or 201\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200,201]);",
+									"});",
+									"pm.test(\"Check response of added Comment\", function () {",
+									"    pm.response.to.be.withBody;",
+									"    pm.response.to.be.json;",
+									"});",
+									"pm.test(\"Test comment 'id' field\", function () {",
+									"    pm.expect(jsonData[0]).to.have.property('id');",
+									"    pm.expect(jsonData[0].id, \"id must be 1\").to.eql(1);",
+									"});",
+									"pm.test(\"Test comment 'event' field\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData[0]).to.have.property('event');",
+									"    pm.expect(jsonData[0].event.id, '\"event\" must be 1').to.eql(1);",
+									"});",
+									"pm.test(\"Test comment 'user' field\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData[0]).to.have.property('user');",
+									"    pm.expect(jsonData[0].user.id, '\"user\" must be 1').to.eql(1);",
+									"});",
+									"pm.test(\"Test comment 'text' field\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData[0]).to.have.property('text');",
+									"    pm.expect(jsonData[0].text, '\"text\" must be \"newText\"').to.eql(\"newText\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/users/comments/1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"comments",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all  user comments",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"",
+									"pm.expect(jsonData).to.have.length(1);",
+									"",
+									"pm.test(\"Status code is 200 or 201\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200,201]);",
+									"});",
+									"pm.test(\"Check response of added Comment\", function () {",
+									"    pm.response.to.be.withBody;",
+									"    pm.response.to.be.json;",
+									"});",
+									"pm.test(\"Test comment 'id' field\", function () {",
+									"    pm.expect(jsonData[0]).to.have.property('id');",
+									"    pm.expect(jsonData[0].id, \"id must be > 0\").to.eql(1);",
+									"});",
+									"pm.test(\"Test comment 'event' field\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData[0]).to.have.property('event');",
+									"    pm.expect(jsonData[0].event.id, '\"event\" must be 1').to.eql(1);",
+									"});",
+									"pm.test(\"Test comment 'user' field\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData[0]).to.have.property('user');",
+									"    pm.expect(jsonData[0].user.id, '\"user\" must be 1').to.eql(1);",
+									"});",
+									"pm.test(\"Test comment 'text' field\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData[0]).to.have.property('text');",
+									"    pm.expect(jsonData[0].text, '\"text\" must be \"newText\"').to.eql(\"newText\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/users/comments/1/1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"comments",
+								"1",
+								"1"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete comment",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200,204]);",
+									"});",
+									"",
+									"pm.sendRequest({",
+									"    url: \"http://localhost:8080/comments/1/1\",",
+									"    method: 'GET',",
+									"    header: {",
+									"        'Content-Type': 'application/json'",
+									"    }",
+									"}, function (err, res) {",
+									"    if (err) {",
+									"        console.error(err);",
+									"        return;",
+									"    }",
+									"    ",
+									"    pm.expect(res.code).to.eql(404);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/users/comments/1/1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"comments",
+								"1",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "public",
+			"item": [
+				{
+					"name": "Comment create",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Status code is 200 or 201\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200,201]);",
+									"});",
+									"pm.test(\"Check response of added Comment\", function () {",
+									"    pm.response.to.be.withBody;",
+									"    pm.response.to.be.json;",
+									"});",
+									"pm.test(\"Test comment 'id' field\", function () {",
+									"    pm.expect(jsonData).to.have.property('id');",
+									"    pm.expect(jsonData.id, \"id must be 2\").to.eql(2);",
+									"});",
+									"pm.test(\"Test comment 'event' field\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.have.property('event');",
+									"    pm.expect(jsonData.event.id, '\"event\" must be 1').to.eql(1);",
+									"});",
+									"pm.test(\"Test comment 'user' field\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.have.property('user');",
+									"    pm.expect(jsonData.user.id, '\"user\" must be 1').to.eql(1);",
+									"});",
+									"pm.test(\"Test comment 'text' field\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.have.property('text');",
+									"    pm.expect(jsonData.text, '\"text\" must be \"text\"').to.eql(\"text\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"text\": \"text\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/comments/1/1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"comments",
+								"1",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all comments",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"",
+									"pm.expect(jsonData).to.have.length(1);",
+									"",
+									"pm.test(\"Status code is 200 or 201\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200,201]);",
+									"});",
+									"pm.test(\"Check response of added Comment\", function () {",
+									"    pm.response.to.be.withBody;",
+									"    pm.response.to.be.json;",
+									"});",
+									"pm.test(\"Test comment 'id' field\", function () {",
+									"    pm.expect(jsonData[0]).to.have.property('id');",
+									"    pm.expect(jsonData[0].id, \"id must be 2\").to.eql(2);",
+									"});",
+									"pm.test(\"Test comment 'event' field\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData[0]).to.have.property('event');",
+									"    pm.expect(jsonData[0].event.id, '\"event\" must be 1').to.eql(1);",
+									"});",
+									"pm.test(\"Test comment 'user' field\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData[0]).to.have.property('user');",
+									"    pm.expect(jsonData[0].user.id, '\"user\" must be 1').to.eql(1);",
+									"});",
+									"pm.test(\"Test comment 'text' field\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData[0]).to.have.property('text');",
+									"    pm.expect(jsonData[0].text, '\"text\" must be \"text\"').to.eql(\"text\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/comments/1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"comments",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get comment by id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Status code is 200 or 201\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200,201]);",
+									"});",
+									"pm.test(\"Check response of added Comment\", function () {",
+									"    pm.response.to.be.withBody;",
+									"    pm.response.to.be.json;",
+									"});",
+									"pm.test(\"Test comment 'id' field\", function () {",
+									"    pm.expect(jsonData).to.have.property('id');",
+									"    pm.expect(jsonData.id, \"id must be 2\").to.eql(2);",
+									"});",
+									"pm.test(\"Test comment 'event' field\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.have.property('event');",
+									"    pm.expect(jsonData.event.id, '\"event\" must be 1').to.eql(1);",
+									"});",
+									"pm.test(\"Test comment 'user' field\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.have.property('user');",
+									"    pm.expect(jsonData.user.id, '\"user\" must be 1').to.eql(1);",
+									"});",
+									"pm.test(\"Test comment 'text' field\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.have.property('text');",
+									"    pm.expect(jsonData.text, '\"text\" must be \"text\"').to.eql(\"text\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/comments/1/2",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"comments",
+								"1",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8080"
+		}
+	]
+}
