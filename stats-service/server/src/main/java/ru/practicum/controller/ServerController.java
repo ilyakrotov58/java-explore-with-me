@@ -2,6 +2,8 @@ package ru.practicum.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.dto.HitDto;
@@ -22,8 +24,9 @@ public class ServerController {
     }
 
     @PostMapping("/hit")
-    public void saveViewInfo(@RequestBody HitDto hitDto) {
+    public ResponseEntity<HttpStatus> saveViewInfo(@RequestBody HitDto hitDto) {
         statService.saveViewInfo(hitDto);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @GetMapping("/stats")

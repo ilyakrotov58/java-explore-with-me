@@ -8,7 +8,7 @@ create table if not exists hits
             primary key,
     app       varchar(30)  not null,
     uri       varchar(100) not null,
-    ip        varchar(12)  not null,
+    ip        varchar(50)  not null,
     timestamp timestamp    not null
 );
 
